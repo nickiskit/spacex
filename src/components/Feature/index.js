@@ -1,4 +1,5 @@
 import React from 'react';
+import Main from '../Main'
 import RellaxWrapper from 'react-rellax-wrapper'
 
 import './feature.css'
@@ -10,11 +11,12 @@ const images = {
   	other : 'starship'
 }
 
-const Feature = (props) => { 
-	return Object.keys(props).length ? (
-  <section className="features">
+const Feature = ({ name, height, diameter, mass, payload_weights: payloadWeights, description }) => (
+	<>
+	<Main />
+	<section className="features">
 		<h2 className="features-title">
-			{props.name} <br/>Overview
+			{name} <br/>Overview
 		</h2>
 		<div className="overview">
 
@@ -25,27 +27,30 @@ const Feature = (props) => {
 				<thead>
 					<tr>
 						<td className="table-column">HEIGHT</td>
-						<td className="table-column"> {props.height.meters} m / {props.height.feet} ft</td>
+						<td className="table-column"> {height.meters} m / {height.feet} ft</td>
 					</tr>
 					<tr>
 						<td className="table-column">DIAMETER</td>
-						<td className="table-column">{props.diameter.meters} m / {props.diameter.feet} ft</td>
+						<td className="table-column">{diameter.meters} m / {diameter.feet} ft</td>
 					</tr>
 					<tr>
 						<td className="table-column">MASS</td>
-						<td className="table-column">{props.mass.kg} kg / {props.mass.lb} lb</td>
+						<td className="table-column">{mass.kg} kg / {mass.lb} lb</td>
 					</tr>
-					<tr>
-						<td className="table-column">PAYLOAD TO LEO</td>
+					{payloadWeights.map(item => (
+						<tr key={item.id}>
+						<td className="table-column">PAYLOAD TO {item.id.toUpperCase()}</td>
 						<td className="table-column">
-						{props.payload_weights[0].kg} kg / {props.payload_weights[0].lb} lb
+						{item.kg} kg / {item.lb} lb
 						</td>
 					</tr>
+					))}
+					
 				</thead>
 			</table>
 			<RellaxWrapper speed={14}>
 				<img
-						src={`img/${images.hasOwnProperty(props.name) ? images[props.name] : images.other}.png`}
+						src={`img/${images.hasOwnProperty(name) ? images[name] : images.other}.png`}
 						alt="rocket"
 						className="rocket"
 				/>
@@ -53,11 +58,12 @@ const Feature = (props) => {
 			<article>
 				<h3 className="features-subtitle">DESCRIPTION</h3>
 				<p className="features-text">
-					{props.description}
+					{description}
 				</p>
 			</article>
 		</div>
-	</section>) : '';
-};
+	</section>
+	</>
+);
 
 export default Feature;
