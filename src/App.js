@@ -15,7 +15,7 @@ class App extends React.Component {
 
 	state = {
 		rocket: 'Falcon 1',
-		rocketFetures: null,
+		rocketFeatures: null,
 		rockets: [] 
 	};
 
@@ -32,8 +32,8 @@ class App extends React.Component {
 				return data;
 			})
 			.then(data => data.find(item => item.name === this.state.rocket))
-			.then(rocketFetures => {
-				this.setState({rocketFetures});
+			.then(rocketFeatures => {
+				this.setState({rocketFeatures});
 				console.log(this.state);
 			})
 	}
@@ -49,7 +49,7 @@ class App extends React.Component {
 		    <>
 		    <Header rockets={this.state.rockets} changeRocket={this.changeRocket} />
 		    <Main rocket={this.state.rocket}/>
-		    <Feature />
+		    <Feature {...this.state.rocketFeatures} />
 		    <Footer />
 		   </>
     	);

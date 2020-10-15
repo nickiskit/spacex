@@ -3,10 +3,18 @@ import RellaxWrapper from 'react-rellax-wrapper'
 
 import './feature.css'
 
-const Feature = () => (
+const images = {
+	'Falcon 1': 'falcon-1',
+  	'Falcon 9': 'falcon-9', 
+  	'Falcon Heavy': 'falcon-heavy',
+  	other : 'starship'
+}
+
+const Feature = (props) => { 
+	return Object.keys(props).length ? (
   <section className="features">
 		<h2 className="features-title">
-			Falcon 1 <br/>Overview
+			{props.name} <br/>Overview
 		</h2>
 		<div className="overview">
 
@@ -17,25 +25,27 @@ const Feature = () => (
 				<thead>
 					<tr>
 						<td className="table-column">HEIGHT</td>
-						<td className="table-column">22.25 m / 73 ft</td>
+						<td className="table-column"> {props.height.meters} m / {props.height.feet} ft</td>
 					</tr>
 					<tr>
 						<td className="table-column">DIAMETER</td>
-						<td className="table-column">1.68 m / 5.5 ft</td>
+						<td className="table-column">{props.diameter.meters} m / {props.diameter.feet} ft</td>
 					</tr>
 					<tr>
 						<td className="table-column">MASS</td>
-						<td className="table-column">30,146 kg / 66,460 lb</td>
+						<td className="table-column">{props.mass.kg} kg / {props.mass.lb} lb</td>
 					</tr>
 					<tr>
 						<td className="table-column">PAYLOAD TO LEO</td>
-						<td className="table-column">450 kg / 992 lb</td>
+						<td className="table-column">
+						{props.payload_weights[0].kg} kg / {props.payload_weights[0].lb} lb
+						</td>
 					</tr>
 				</thead>
 			</table>
 			<RellaxWrapper speed={14}>
 				<img
-						src="img/falcon-1.png"
+						src={`img/${images.hasOwnProperty(props.name) ? images[props.name] : images.other}.png`}
 						alt="rocket"
 						className="rocket"
 				/>
@@ -43,11 +53,11 @@ const Feature = () => (
 			<article>
 				<h3 className="features-subtitle">DESCRIPTION</h3>
 				<p className="features-text">
-					The Falcon 1 was an expendable launch system privately developed and manufactured by SpaceX during 2006-2009. On 28 September 2008, Falcon 1 became the first privately-developed liquid-fuel launch vehicle to go into orbit around the Earth.
+					{props.description}
 				</p>
 			</article>
 		</div>
-	</section>
-);
+	</section>) : '';
+};
 
 export default Feature;
